@@ -1,0 +1,77 @@
+<!-- <panel> -->
+<div class="d-flex justify-content-between flex-row" *ngIf="searchfilter">
+    <div class="d-flex">
+        <span>Show &nbsp;</span>
+        <form [formGroup]="rowForm">
+            <select formControlName="row" style="max-width: 60px;" (change)="onRowPerPageChange()">
+                <option [value]="5">5</option>
+                <option [value]="10">10</option>
+                <option [value]="20">20</option>
+                <option [value]="50">50</option>
+                <option [value]="100">100</option>
+                <option [value]="-1">All</option>
+            </select>
+        </form>
+        <span>&nbsp;entries</span>
+    </div>
+    <div>
+        <div class="d-flex">
+            <div *ngIf="this.exportsRequired">
+                <div class="btn-group mr-3 mt-1 actbtn">
+                    <button type="button" class="btn btn-outline-default btn-sm" (click)="copyTable()"><i
+                            class="fa fa-copy"></i> Copy</button>
+                    <button type="button" class="btn btn-outline-default btn-sm" (click)="Export('xlsx')"><i
+                            class="fa fa-file-excel-o"></i> Excel</button>
+                    <button type="button" class="btn btn-outline-default btn-sm" (click)="Export('csv')"><i
+                            class="fa fa-file-text"></i> CSV</button>
+                    <button type="button" class="btn btn-outline-default btn-sm" (click)="printData()"><i
+                            class="fa fa-print"></i> Print</button>
+                </div>
+            </div>
+            <form [formGroup]="rowForm">
+
+                <input type="search" (cancel)="onSerachhange()" (change)="onSerachhange()" (search)="onSerachhange()"
+                    formControlName="search" class="form-control" id="searchItem" placeholder="Search">
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+
+<hot-table [data]="data" [disableVisualSelection]="true" [rowHeaders]="true" [id]="id" [search]="true" [filters]="true" [width]="'100%'"
+    [height]="'auto'" stretchH="all" [autoColumnSize]="true" [manualColumnFreeze]="true" [dropdownMenu]="dropDownMenu"
+    licenseKey="non-commercial-and-evaluation">
+    <ng-container *ngFor="let item of columns">
+        <ng-container *ngIf="item.keyValue !='action' && !item['customRender']&& !item['hasHtml']">
+            <hot-column [width]="item['width']?item['width']:'auto'" [data]="item?.keyValue" [title]="item?.keyName"
+                [editor]="false"></hot-column>
+        </ng-container>
+        <ng-container *ngIf="item['customRender']">
+            <hot-column [width]="item['width']?item['width']:'auto'" [renderer]="selectedRow(item?.customRender)"
+                [data]="item?.keyValue" [title]="item?.keyName" [editor]="false"></hot-column>
+        </ng-container>
+        <ng-container *ngIf="item['hasHtml']">
+            <hot-column [width]="item['width']?item['width']:'auto'" [renderer]="html" [data]="item?.keyValue"
+                [title]="item?.keyName" [editor]="false"></hot-column>
+        </ng-container>
+        <ng-container *ngIf="item.keyValue == 'action'">
+            <hot-column [width]="item['width']?item['width']:'auto'" [data]="item?.keyValue" [editor]="false"
+                [title]="item?.keyName" [readOnly]="true" [renderer]="actionRenderee()"></hot-column>
+        </ng-container>
+    </ng-container>
+
+
+</hot-table>
+<ng-container *ngIf="data.length == 0">
+    <p class="text-center"> No data to show</p>
+</ng-container>
+<br>
+<div *ngIf="searchfilter" class="d-flex justify-content-end d-flex align-items-center">
+    <button type="button" class="btn btn-secondary btn-sm mr-2" (click)="prevClick()"
+        [disabled]="getPageumber()<=1">Prev</button>
+    <button type="button" class="btn btn-primary btn-sm" disabled>{{getPageumber()}}</button>
+    <button type="button" class="btn btn-secondary btn-sm ml-2" [disabled]=" nextCheck()"
+        (click)="nextClick()">Next</button>
+</div>
+<!-- </panel> -->
+<!-- <hot-table [settings]="hotSettings" licenseKey="non-commercial-and-evaluation"></hot-table> -->

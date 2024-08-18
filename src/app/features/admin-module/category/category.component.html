@@ -1,0 +1,454 @@
+<body class="layout-top-nav light-skin theme-primary fixed">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <div class="container-full">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="d-flex align-items-center">
+          <div class="me-auto">
+            <h4 class="page-title">Category</h4>
+            <div class="d-inline-block align-items-center">
+              <nav>
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="#"><i class="mdi mdi-home-outline"></i></a>
+                  </li>
+                  <li class="breadcrumb-item active" aria-current="page">
+                    Category List
+                  </li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Add Category Modal -->
+      <form
+        class="clearfix"
+        [formGroup]="formStructure"
+        (ngSubmit)="onSubmit()"
+        enctype="multipart/form-data"
+      >
+        <div class="modal center-modal fade" id="modal-add" tabindex="-1">
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">New Category</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <section class="content">
+                  <div class="row">
+                    <div class="col-xl-6 col-12">
+                      <div class="box">
+                        <div class="box-header">
+                          <h4 class="box-title">Add Category</h4>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                              <label class="form-label">Category Name</label>
+                              <input
+                                type="text"
+                                class="form-control ps-15 bg-transparent{{
+                                  formSrv$.checkFormControlInvalid(
+                                    'name',
+                                    formStructure
+                                  )
+                                    ? ' is-invalid'
+                                    : ''
+                                }}"
+                                placeholder="Category Name"
+                                formControlName="name"
+                              />
+                              <div
+                                class="invalid-feedback"
+                                *ngIf="
+                                  formSrv$.checkFormControlInvalid(
+                                    'name',
+                                    formStructure
+                                  )
+                                "
+                              >
+                                <i class="ic-error"></i> {{ "Required Field" }}
+                              </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                              <label class="form-label">Code</label>
+                              <input
+                                type="text"
+                                class="form-control ps-15 bg-transparent{{
+                                  formSrv$.checkFormControlInvalid(
+                                    'code',
+                                    formStructure
+                                  )
+                                    ? ' is-invalid'
+                                    : ''
+                                }}"
+                                placeholder="Code"
+                                formControlName="code"
+                              />
+                              <div
+                                class="invalid-feedback"
+                                *ngIf="
+                                  formSrv$.checkFormControlInvalid(
+                                    'code',
+                                    formStructure
+                                  )
+                                "
+                              >
+                                <i class="ic-error"></i> {{ "Required Field" }}
+                              </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                              <label class="form-label">Description</label>
+                              <textarea
+                                rows="7"
+                                class="form-control ps-15 bg-transparent{{
+                                  formSrv$.checkFormControlInvalid(
+                                    'description',
+                                    formStructure
+                                  )
+                                    ? ' is-invalid'
+                                    : ''
+                                }}"
+                                placeholder="Message"
+                                formControlName="description"
+                                required
+                              ></textarea>
+                              <div
+                                class="invalid-feedback"
+                                *ngIf="
+                                  formSrv$.checkFormControlInvalid(
+                                    'description',
+                                    formStructure
+                                  )
+                                "
+                              >
+                                <i class="ic-error"></i> {{ "Required Field" }}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-12">
+                      <div class="box">
+                        <div class="box-header">
+                          <h4 class="box-title">Add Images</h4>
+                        </div>
+                        <div class="box-body">
+                          <div class="product-img text-start">
+                            <div class="row">
+                              <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                                <img
+                                  src="../../../../assets/images/food/dals.jpg"
+                                  alt=""
+                                  class="img-fluid mb-15"
+                                  id="imagePreview"
+                                />
+                              </div>
+                              <div class="col-lg-6 col-12">
+                                <p>Upload Another Image</p>
+                                <div class="btn btn-info mb-20 d-block">
+                                  <input
+                                    type="file"
+                                    class="upload"
+                                    (change)="onImageChange($event)"
+                                  />
+                                </div>
+                                <div class="d-flex gap-2">
+                                  <button class="btn btn-warning mr-2">
+                                    Edit
+                                  </button>
+                                  <button class="btn btn-danger">Delete</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="modal-footer modal-footer-uniform">
+                <button
+                  type="button"
+                  class="btn btn-danger float-end"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary float-end">
+                  Save changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- /.Add Category Modal -->
+
+      <!--Edit Category Modal -->
+      <form
+        class="clearfix"
+        [formGroup]="formStructure" 
+      >
+        <div class="modal center-modal fade" id="modal-edit" tabindex="-1">
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Edit Category</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <section class="content">
+                  <div class="row">
+                    <div class="col-xl-6 col-12">
+                      <div class="box">
+                        <div class="box-header">
+                          <h4 class="box-title">Edit Category</h4>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                              <label class="form-label">Category Name</label>
+                              <input
+                                type="text"
+                                class="form-control ps-15 bg-transparent{{
+                                  formSrv$.checkFormControlInvalid(
+                                    'name',
+                                    formStructure
+                                  )
+                                    ? ' is-invalid'
+                                    : ''
+                                }}"
+                                placeholder="Category Name"
+                                formControlName="name"
+                              />
+                              <div
+                                class="invalid-feedback"
+                                *ngIf="
+                                  formSrv$.checkFormControlInvalid(
+                                    'name',
+                                    formStructure
+                                  )
+                                "
+                              >
+                                <i class="ic-error"></i> {{ "Required Field" }}
+                              </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                              <label class="form-label">Code</label>
+                              <input
+                                type="text"
+                                class="form-control ps-15 bg-transparent{{
+                                  formSrv$.checkFormControlInvalid(
+                                    'code',
+                                    formStructure
+                                  )
+                                    ? ' is-invalid'
+                                    : ''
+                                }}"
+                                placeholder="Code"
+                                formControlName="code"
+                              />
+                              <div
+                                class="invalid-feedback"
+                                *ngIf="
+                                  formSrv$.checkFormControlInvalid(
+                                    'code',
+                                    formStructure
+                                  )
+                                "
+                              >
+                                <i class="ic-error"></i> {{ "Required Field" }}
+                              </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                              <label class="form-label">Description</label>
+                              <textarea
+                                rows="7"
+                                class="form-control ps-15 bg-transparent{{
+                                  formSrv$.checkFormControlInvalid(
+                                    'description',
+                                    formStructure
+                                  )
+                                    ? ' is-invalid'
+                                    : ''
+                                }}"
+                                placeholder="Message"
+                                formControlName="description"
+                                required
+                              ></textarea>
+                              <div
+                                class="invalid-feedback"
+                                *ngIf="
+                                  formSrv$.checkFormControlInvalid(
+                                    'description',
+                                    formStructure
+                                  )
+                                "
+                              >
+                                <i class="ic-error"></i> {{ "Required Field" }}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-12">
+                      <div class="box">
+                        <div class="box-header">
+                          <h4 class="box-title">Add Images</h4>
+                        </div>
+                        <div class="box-body">
+                          <div class="product-img text-start">
+                            <div class="row">
+                              <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                                <img
+                                [src]="formStructure.get('imageUrl').value || '../../../../assets/images/food/dals.jpg'"
+                                  alt=""
+                                  class="img-fluid mb-15"
+                                  id="imagePreviewEdit"
+                                />
+                              </div>
+                              <div class="col-lg-6 col-12">
+                                <p>Upload Another Image</p>
+                                <div class="btn btn-info mb-20 d-block">
+                                  <input
+                                    type="file"
+                                    class="upload"
+                                    (change)="onImageChangeEdit($event)"
+                                  />
+                                </div>
+                                <div class="d-flex gap-2">
+                                  <button class="btn btn-warning mr-2">
+                                    Edit
+                                  </button>
+                                  <button class="btn btn-danger">Delete</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="modal-footer modal-footer-uniform">
+                <button
+                  type="button"
+                  class="btn btn-danger float-end"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary float-end"
+                  (click)="updateCategory()"
+                >
+                  Save changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- /.edit Category Modal -->
+
+      <!-- Main content -->
+      <section class="content">
+        <section class="content">
+          <!-- Content Wrapper. Contains page content -->
+          <div class="box">
+            <div class="box-header with-border">
+              <h4 class="box-title btn-group nav-item">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modal-add"
+                >
+                  Add Category
+                </button>
+              </h4>
+            </div>
+            <div class="box-body">
+              <div class="table-responsive rounded card-table">
+                <table class="table border-no" id="example1 align-items-center">
+                  <thead class="align-items-center">
+                    <tr class="bg-warning">
+                      <th>Category ID</th>
+                      <th></th>
+                      <th>Category Name</th>
+                      <th>Food Items</th> 
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody class="align-items-center">
+                    <tr
+                      *ngFor="let category of categories"
+                      class="hover-primary"
+                    >
+                      <td>{{ category.id }}</td>
+                      <td>
+                        <img *ngFor="let foodItem of category.foodItems" [src]="foodItem.imageUrl" style="width: 20mm; height: 20mm; object-fit: contain;">
+                      </td>
+                      
+                      <td>{{ category.name }}</td>
+                      <td>
+                        <ul>
+                          <li *ngFor="let foodItem of category.foodItems">
+                            {{ foodItem.name }}
+                          </li>
+                        </ul>
+                      </td>
+                      <td>
+                        <div class="btn-group">
+                          <a
+                            class="hover-primary dropdown-toggle no-caret"
+                            data-bs-toggle="dropdown"
+                            ><i class="fa fa-ellipsis-h"></i
+                          ></a>
+                          <div class="dropdown-menu">
+                            <a
+                              class="dropdown-item"
+                              data-bs-toggle="modal"
+                              data-bs-target="#modal-edit"
+                              (click)="onEdit(category)"
+                              >Edit</a
+                            >
+                            <a
+                              class="dropdown-item hover-danger"
+                              (click)="deleteCategory(category.id)"
+                              >Delete</a
+                            >
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- /.content-wrapper -->
+        </section>
+      </section>
+    </div>
+  </div>
+</body>

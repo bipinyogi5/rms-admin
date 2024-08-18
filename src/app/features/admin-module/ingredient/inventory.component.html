@@ -1,0 +1,74 @@
+<body class="layout-top-nav light-skin theme-primary fixed">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <div class="container-full">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="d-flex align-items-center">
+          <div class="me-auto">
+            <h4 class="page-title">Ingredients</h4>
+            <div class="d-inline-block align-items-center">
+              <!-- Breadcrumb navigation -->
+              <nav>
+                <ol class="breadcrumb" routerLink="/features/admin/food-detail">
+                  <li class="breadcrumb-item">
+                    <a><i class="mdi mdi-home-outline"></i></a>
+                  </li>
+                  <li class="breadcrumb-item active" aria-current="page">Food Details</li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Form Box -->
+      <div class="box">
+        <div class="box-header"> 
+          <div class="d-flex gap-2 p-3">
+            <input type="text" #headerInput placeholder="New Header" class="form-control">
+            <button class="btn btn-primary" (click)="addHeader(headerInput.value)">Add Header</button>
+          </div>
+        </div>
+        <div class="box-body">
+          <!-- Table -->
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+              <!-- Table Header -->
+              <thead class="thead-dark" *ngIf="headers.length > 0">
+                <tr>
+                  <th scope="col" *ngFor="let header of headers">{{ header }}</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <!-- Table Body -->
+              <tbody>
+                <tr *ngFor="let item of items; let i = index">
+                  <td *ngFor="let header of headers">{{ item[header] }}</td>
+                  <td *ngIf="headers.length > 0">
+                    <button class="btn btn-sm btn-info" (click)="editItem(i)">Edit</button>
+                    <button class="btn btn-sm btn-danger" (click)="deleteItem(i)">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+              <!-- Table Footer -->
+              <tfoot *ngIf="headers.length > 0">
+                <tr>
+                  <td *ngFor="let header of headers">
+                    <input type="text" [(ngModel)]="newItem[header]" [placeholder]="header" class="form-control">
+                  </td>
+                  <td>
+                    <button class="btn btn-success" (click)="addItem()">Add</button>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!-- Submit Button -->
+          <button class="btn btn-primary float-end" *ngIf="headers.length > 0" (click)="submitData()">Submit</button>
+          <button class="btn btn-danger float-end" *ngIf="headers.length > 0" (click)="delete()">Delete</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>

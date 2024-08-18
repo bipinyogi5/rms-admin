@@ -1,0 +1,101 @@
+<body class="layout-top-nav light-skin theme-primary fixed">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <div class="container-full">
+      <!-- Main content -->
+      <section class="content"> 
+        <div class="row">
+          <div class="col-12">
+              <div class="box">
+                <div class="row">
+                  <div class="col-xl-3 col-lg-3 col-md-6">
+                    <div id="chart1"></div>
+                  </div>
+                  <div class="col-xl-3 col-lg-3 col-md-6">
+                    <div id="chart2"></div>
+                  </div>
+                  <div class="col-xl-3 col-lg-3 col-md-6">
+                    <div id="chart3"></div>
+                  </div>
+                  <div class="col-xl-3 col-lg-3 col-md-6">
+                    <div id="chart4"></div>
+                  </div>
+                </div>
+              </div>
+            <div class="box">
+              <div class="box-body">
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    
+                    <thead >
+                      <tr class="bg-warning">
+                        <th scope="col">Order ID</th> 
+                        <th scope="col">User Name</th> 
+                        <th scope="col">Email</th>
+                        <th scope="col">Food Items</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Total Price</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Created At</th>
+                        <th scope="col">Updated At</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let order of orderList.orders">
+                        <td>{{ order.id }}</td>  
+                        <td>{{ order.user.name }}</td> 
+                        <td>{{ order.user.email }}</td>  
+                        <td>
+                          <ul>
+                            <li *ngFor="let foodItem of order.orderFoodItems">
+                              Name: {{ foodItem['food-item'].name}} &nbsp; Quantity: {{ foodItem.quantity }},
+                            </li>
+                          </ul>
+                        </td>
+                        <td>{{ order.description }}</td>
+                        <td>{{ order.totalPrice }}</td>
+                        <td>
+                          <span [ngClass]="{
+                            'badge badge-info': order.orderStatus === 'Pending',
+                            'badge badge-danger': order.orderStatus === 'Cancelled',
+                            'badge badge-success': order.orderStatus === 'Paid',
+                            'badge badge-primary': order.orderStatus === 'Delivered',
+                            'badge badge-dark': order.orderStatus === 'Confirmed'
+                          }">{{ order.orderStatus }}</span> 
+                         
+                        </td>
+                        
+                        <td>{{ order.createdAt }}</td>
+                        <td>{{ order.updatedAt }}</td>
+                        <td>  <div class="btn-group">
+                          <a
+                            class="hover-primary dropdown-toggle no-caret"
+                            data-bs-toggle="dropdown"
+                            ><i class="fa fa-ellipsis-h"></i
+                          ></a>
+                          <div class="dropdown-menu">
+                            <!-- Pass order ID and status to the function on click -->
+                            <a class="dropdown-item hover-primary" (click)="updateOrderStatus(order.id, 'Confirmed')">Confirmed</a>
+                            <a class="dropdown-item hover-success" (click)="updateOrderStatus(order.id, 'Delivered')">Delivered</a>
+                            <a class="dropdown-item hover-danger" (click)="updateOrderStatus(order.id, 'Cancelled')">Canceled</a>
+                          </div>
+                        </div></td>
+                      </tr>
+                    </tbody>
+                    
+                    
+                    
+                    
+
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- /.content -->
+    </div>
+  </div>
+</body>

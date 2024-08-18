@@ -1,0 +1,146 @@
+<body class="layout-top-nav light-skin theme-primary fixed">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <div class="container-full">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="d-flex align-items-center">
+                    <div class="me-auto">
+                        <h4 class="page-title">Carousel</h4>
+                        <div class="d-inline-block align-items-center">
+                            <nav>
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="#"><i class="mdi mdi-home-outline"></i></a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">
+                                        Carousel List
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Main content -->
+            <div class="col-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h4 class="box-title btn-group nav-item">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#modal-add">
+                                Add Carousel
+                            </button>
+                        </h4>
+                    </div>
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover thead-primary">
+                                <thead>
+                                    <tr class="bg-warning">
+                                        <th scope="col">S.N</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let carousel of carousels; let i = index">
+                                        <th scope="row">{{ i + 1 }}</th>
+                                        <th scope="row">{{carousel.title}}</th>
+                                        <td>
+                                            <img [src]="carousel.imageUrl" alt="Carousel Image"
+                                                style="max-width: 100px; max-height: 100px;">
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a class="hover-primary dropdown-toggle no-caret"
+                                                    data-bs-toggle="dropdown">
+                                                    <i class="fa fa-ellipsis-h"></i>
+                                                </a>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item hover-danger"
+                                                        (click)="deleteCarousel(carousel.id)">Delete</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Add carousel Modal -->
+            <form class="clearfix" [formGroup]="carouselForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+                <div class="modal center-modal fade" id="modal-add" tabindex="-1">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">New Category</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <section class="content">
+                                    <div class="row">
+                                        <div class="col-xl-6 col-12">
+                                            <div class="box">
+                                                <div class="box-header">
+                                                    <h4 class="box-title">Add Category</h4>
+                                                </div>
+                                                <div class="box-body">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                                                            <label class="form-label">Carousel Name</label>
+                                                            <input type="text" class="form-control" placeholder="Carousel Name" formControlName="title">
+                                                          </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-12">
+                                            <div class="box">
+                                                <div class="box-header">
+                                                    <h4 class="box-title">Add Images</h4>
+                                                </div>
+                                                <div class="box-body">
+                                                    <div class="product-img text-start">
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                                                                <img [src]="imageUrl" alt="" class="img-fluid mb-15"
+                                                                    id="imagePreview">
+                                                            </div>
+                                                            <div class="col-lg-6 col-12">
+                                                                <p>Upload Image</p>
+                                                                <div class="btn btn-info mb-20 d-block">
+                                                                    <input type="file" class="upload"
+                                                                      >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="modal-footer modal-footer-uniform">
+                                <button type="submit" class="btn btn-primary float-end">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- /.Add carousel Modal -->
+
+
+        </div>
+    </div>
+</body>

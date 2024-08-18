@@ -1,0 +1,16 @@
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {  
+
+   opacity: 1;
+
+}
+.actbtn button{
+   color: #212529;
+   background-color: #fff;
+   border-color: #d5d5d5;
+}
+.actbtn button:hover{
+   color: #212529;
+    background-color: #eee;
+    border-color: #d5d5d5;
+}
